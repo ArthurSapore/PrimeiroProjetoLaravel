@@ -1,0 +1,9 @@
+*{
+    font-family: Nunito;
+}
+header{
+    background-color: aqua;
+}
+.navbar img{
+    width: 50px;
+}

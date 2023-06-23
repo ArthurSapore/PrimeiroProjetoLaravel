@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/**
+ * Importo Controller
+ */
+use \App\Http\Controllers\EventController;
+
+/**
+ * Passo o EventController como parâmetro e informo o método do controller que será
+ * usado nessa rota
+ */
+Route::get('/', [EventController::class, 'index']);
+
+Route::get('/events/create', [EventController::class, 'create']);
