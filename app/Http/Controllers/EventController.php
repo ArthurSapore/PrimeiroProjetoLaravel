@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Event;
+
 /**
  * As Views são chamadas no controller
  */
@@ -11,7 +13,11 @@ use Illuminate\Http\Request;
 class EventController extends Controller
 {
     public function  index () {
-        return view('welcome');
+        /**
+         * chama todos os eventos do banco de dados
+         */
+        $events = Event::all();
+        return view('welcome', ['events'=> $events]);
     }
 
     public function create (){
