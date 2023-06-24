@@ -25,3 +25,9 @@ use \App\Http\Controllers\EventController;
 Route::get('/', [EventController::class, 'index']);
 
 Route::get('/events/create', [EventController::class, 'create']);
+
+/**
+ * Para o metodo post crio a rota e passo o método store do controller onde vai ter toda 
+ * lógica de adição dos dados
+ */
+Route::post('/events', [EventController::class, 'store']);
