@@ -28,8 +28,7 @@ class EventController extends Controller
     }
     /**
      * Request são os valores que irão ser recebidos para serem armazenados
-     */
-
+    */
     public function store(Request $request){
         /**
          * instâncio o model em uma variavel
@@ -43,11 +42,41 @@ class EventController extends Controller
        $event->private = $request->private;
 
        /**
-        * método que irá persistir os dados 
+        * TRATANDO O RECEBIMENTO DE IMAGENS
+        */
+       if($request->hasFile('image') && $request->file('image')->isValid()){
+            $requestImage = $request->image;
+
+            $extension = $requestImage->extension();
+
+            /**
+             * md5 cria um hash
+             * PEGA O NOME DO ARQUIVO E CONCATEMA COM O HORÁRIO DO ENVIO 
+             * PARA QUE O ARQUIVO TENHA UM NOME ÚNICO
+             */
+            $imageName = md5($requestImage->getClientOriginalName().strtotime("now").".".$extension);
+
+            /**
+             * SALVA A IMAGEM NO CAMINHO EXPECIFICADO COM O NOME CRIADO
+             */
+            $requestImage->move(public_path('img/events'), $imageName);
+
+            /**
+             * SALVA O NOME DA IMAGEM NO BANCO
+             */
+
+             
+            $event->image = $imageName;
+       }
+
+       /**
+        * método que irá persistir os dados no banco 
         */
        $event->save();
-
-    return redirect('/');
+    /**
+     * with envia uma mensagem de sessão para a view
+     */
+    return redirect('/')->with('msg', 'Evento criado com sucesso!');
 
         
     }

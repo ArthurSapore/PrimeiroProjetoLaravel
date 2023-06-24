@@ -41,8 +41,16 @@
             </div>
         </header>
 
+        <main class="contaier-fluid">
+            <div class="row">
+                {{--Verifica se possui alguma msg de sessão, se sim, exibe na tela--}}
+                @if(session('msg'))
+                    <p class="msg">{{session('msg')}}</p>
+                @endif
+                @yield('content')
 
-       @yield('content')
+            </div>
+        </main>
        <footer>
             <p>HDC Events &copy; 2023</p>
        </footer>

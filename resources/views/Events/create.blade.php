@@ -4,7 +4,7 @@
 @section('content')
     <div id="event-create-container" class="col-md-6 offset-md-3">
         <h1>Crie o seu evento</h1>
-        <form action="/events" method="post">
+        <form action="/events" method="post" enctype="multipart/form-data" />
             @csrf 
             {{--sem isso o Laravel não deixa enviar os dados para o banco de dados--}}
             {{--O Laravel identifica os campos pela propriedade name--}}
@@ -26,6 +26,10 @@
             <div class="form-group">
                 <label for="title">Descrição:</label>
                 <textarea name="description" id="description"  class="form-control" placeholder="Descrição do evento"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Imagem do evento:</label>
+                <input type="file" class="form-control-file" id="image" name="image" placeholder="Imagem do evento">
             </div>
             <input type="submit" class="bnt btn-primary" value="Criar Evento">
         </form>
