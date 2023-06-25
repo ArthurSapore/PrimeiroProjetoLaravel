@@ -48,7 +48,6 @@ class EventController extends Controller
             $requestImage = $request->image;
 
             $extension = $requestImage->extension();
-
             /**
              * md5 cria um hash
              * PEGA O NOME DO ARQUIVO E CONCATEMA COM O HORÁRIO DO ENVIO 
@@ -56,6 +55,7 @@ class EventController extends Controller
              */
             $imageName = md5($requestImage->getClientOriginalName().strtotime("now").".".$extension);
 
+        
             /**
              * SALVA A IMAGEM NO CAMINHO EXPECIFICADO COM O NOME CRIADO
              */
@@ -68,7 +68,6 @@ class EventController extends Controller
              
             $event->image = $imageName;
        }
-
        /**
         * método que irá persistir os dados no banco 
         */
@@ -77,7 +76,16 @@ class EventController extends Controller
      * with envia uma mensagem de sessão para a view
      */
     return redirect('/')->with('msg', 'Evento criado com sucesso!');
+    }
 
+    /**
+     * funnção para buscar e mostrar os dados do banco
+     */
+    
+    public function show ($id){
+        $event = Event::findOrFail($id);
+
+        return view('events.show', ['event' => $event]);
         
     }
 }
