@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'city', 'private', 'image'];
+    /**
+     * Estou informnado para o Laravel que o items é um array (o Laravel entede por default que receberá uma string)
+     */
+    protected $casts = [
+        'items' => 'array'
+    ];
+    protected $fillable = ['title', 'description', 'city', 'private', 'image', 'items'];
 }

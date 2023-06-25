@@ -18,7 +18,7 @@
 
     </head>
     <body class="antialiased">
-        <header class="navbar navbar-expand-lg navbar-light">
+        <header class="navbar navbar-expand navbar-light">
             <div class="collapse navbar-collapse" id="navbar">
                 <a href="/" class="navbar-brand">
                     <img src="/img/hdcevents_logo.svg" alt="">
