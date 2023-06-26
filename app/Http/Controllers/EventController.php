@@ -16,11 +16,29 @@ class EventController extends Controller
      * renderiza a tela inicial
      */
     public function  index () {
+
         /**
-         * chama todos os eventos do banco de dados
+         * pega o campo de busca com o name search da view
          */
-        $events = Event::all();
-        return view('welcome', ['events'=> $events]);
+        $search = request('search');
+        /**
+         * verifica se o campo está preenchido
+         */
+        if($search){
+            /**
+             * like -> digo que quero registros parecidos com a query passada
+             */
+            $events = Event::where([
+                ['title', 'like', '%'.$search.'%']
+            ])->get();
+        }else{
+            /**
+             * chama todos os eventos do banco de dados
+             */
+            $events = Event::all();
+        }
+
+        return view('welcome', ['events'=> $events, 'search'=>$search]);
     }
 
     public function create (){
