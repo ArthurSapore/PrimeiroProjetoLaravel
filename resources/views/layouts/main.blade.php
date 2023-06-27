@@ -30,12 +30,32 @@
                     <li class="nav-item">
                         <a href="/events/create" class="nav-link">Criar eventos</a>
                     </li>
+                    @auth 
+                        <li class="nav-item">
+                            <a href="/dashboard" class="nav-link">Meu eventos</a>
+                        </li>
+                        <form action="/logout" method="post">
+                            {{-- 
+                                event.preventDefault impede que o link redirecione para a tela /logout
+                                this.closest() procura o elemento pai mais próximo do tipo form  e chama a função submit() para enviá-lo
+                            --}}
+                            @csrf
+                            <a href="/logout" class="nav-link"
+                                onclick ="event.preventDefault();
+                                this.closest('form').submit()">
+                                Sair
+                            </a>
+                        </form>
+                    @endauth
+                    {{--Quando o usuário está logado ele esconde essas tags--}}
+                    @guest
                     <li class="nav-item">
-                        <a href="/" class="nav-link">Entrar</a>
+                        <a href="/login" class="nav-link">Entrar</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/" class="nav-link">Cadastrar</a>
+                        <a href="/register" class="nav-link">Cadastrar</a>
                     </li>
+                    @endguest
 
                 </ul>
             </div>
