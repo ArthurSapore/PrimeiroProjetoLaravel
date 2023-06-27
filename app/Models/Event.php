@@ -17,4 +17,11 @@ class Event extends Model
     protected $dates = ['date'];
     
     protected $fillable = ['title', 'description', 'city', 'private', 'image', 'items'];
+
+    /**
+     * um evento pertence a UM usuário
+     */
+    public function user(){
+        return this->belongsTo('App\Models\User');
+    }
 }

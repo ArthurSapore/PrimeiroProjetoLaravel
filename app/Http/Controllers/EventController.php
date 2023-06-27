@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Event;
+use App\Models\User;
 
 /**
  * As Views são chamadas no controller
@@ -89,6 +90,14 @@ class EventController extends Controller
             $event->image = $imageName;
        }
        /**
+        * Chama o metódo auth para retornar os dados do usuário que está autenticado
+        */
+       $user = auth()->User();
+       /**
+        * passa o id do usuário autenticado para a variavel correspondende ao user_id na tabela events
+        */
+       $event->user_id = $user->id;
+       /**
         * método que irá persistir os dados no banco 
         */
        $event->save();
@@ -104,8 +113,9 @@ class EventController extends Controller
     
     public function show ($id){
         $event = Event::findOrFail($id);
+        $owner = User::find($event->user_id);
 
-        return view('events.show', ['event' => $event]);
+        return view('events.show', ['event' => $event, 'owner'=>$owner->name]);
         
     }
 }

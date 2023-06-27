@@ -1,15 +1,17 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <x-welcome />
-            </div>
+@extends('layout.main')            
+@section('title', 'Meus eventos')    
+       
+@section('container')            
+    @foreach($events as $event)
+    <div class="card col-md-3">
+        <img src="/img/events/{{$event->image}}" alt="">
+        <div class="card-body">
+            <p class="card-date">{{date('d/m/Y', strtotime($event->date))}}</p>
+            <p class="card-participants">X Participantes</p>
+            <h5 class="card-title">{{$event-> title}}</h5>
+            <p class="card-description">{{$event->description}}</p>
+            <a href="/events/{{$event->id}}" class="btn btn-primary">Saber mais</a>
         </div>
     </div>
-</x-app-layout>
+    @endforeach
+@endsection
