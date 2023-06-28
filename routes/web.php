@@ -24,6 +24,9 @@ use \App\Http\Controllers\EventController;
  */
 Route::get('/', [EventController::class, 'index']);
 
+/**
+ * Antes de executar o redirecionamento, verifico se há algum usuário autenticado
+ */
 Route::get('/events/create', [EventController::class, 'create'])->middleware('auth');
 
 /**
@@ -34,6 +37,8 @@ Route::post('/events', [EventController::class, 'store']);
 
 Route::get('events/{id}', [EventController::class, 'show']);
 
+Route::get('/dashboard', [EventController::class, 'dashboard'])->middleware('auth');
+
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'),'verified'])->group(function () {
-    Route::get('/dashboard', [EventController::class, 'show'])->name('dashboard');
+    Route::get('/dashboard', [EventController::class, 'dashboard'])->name('dashboard');
 });

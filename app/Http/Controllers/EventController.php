@@ -113,9 +113,21 @@ class EventController extends Controller
     
     public function show ($id){
         $event = Event::findOrFail($id);
-        $owner = User::find($event->user_id);
-
-        return view('events.show', ['event' => $event, 'owner'=>$owner->name]);
+        /**
+         * Diferente do find(like), o where irá procurar pelo valor exato
+         * first() específica para retornar o primeiro registro encontrado.
+         */
+        $eventOwner = User::where('id', $event->user_id)->first();
+        return view('events.show', ['event' => $event, 'eventOwner'=>$eventOwner->name]);
         
+    }
+
+    public function dashboard(){
+        $user = auth()->user();
+        /**
+         * retorna os eventos relacionados àqueles usuários através do relacionamento ja criado no model.
+         */
+        $events =  $user->events;
+        return view('events.dashboard', ['events'=> $events]);
     }
 }

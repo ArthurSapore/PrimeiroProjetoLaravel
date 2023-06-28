@@ -188,6 +188,16 @@ header {
   flex-direction: column;
 }
 
+/* Dashboard */
+.dashboard-title-container {
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.dashboard-events-container th {
+  width: 25%;
+}
+
 /* footer */
 footer {
   text-align: center;
@@ -202,3 +212,4 @@ footer {
 footer p {
   margin-bottom: 0;
 }
+
