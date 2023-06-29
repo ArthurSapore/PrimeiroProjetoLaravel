@@ -130,4 +130,25 @@ class EventController extends Controller
         $events =  $user->events;
         return view('events.dashboard', ['events'=> $events]);
     }
+
+    public function destroy($id){
+        Event::findOrFail($id)->delete();
+
+        return redirect('/dashboard')->with('msg', 'Evento deletado com sucesso!');
+    }
+
+    public function edit($id){
+        $edit = Event::findOrFail($id);
+
+        return view('events.edit', ['edit'=>$edit]);
+    }
+
+    public function update(Request $request, $id){
+        /**
+         * request all envia todos os dados
+         */
+        Event::findOrFail($id)->update($request->all());
+
+        return redirect('/dashboard')->with('msg', 'Evento atualizado com sucesso!');;
+    }
 }

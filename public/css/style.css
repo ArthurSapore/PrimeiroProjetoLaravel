@@ -198,6 +198,17 @@ header {
   width: 25%;
 }
 
+tr td:nth-child(4){
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/*edit page*/
+.image-preview{
+  width: 100px;
+  margin-top: 20px;
+}
+
 /* footer */
 footer {
   text-align: center;
