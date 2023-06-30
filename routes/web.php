@@ -42,7 +42,10 @@ Route::get('/dashboard', [EventController::class, 'dashboard'])->middleware('aut
 Route::delete('/events/{id}', [EventController::class, 'destroy'])->middleware('auth');
 
 Route::get('/events/edit/{id}', [EventController::class, 'edit'])->middleware('auth');
+
 Route::put('/events/update/{id}', [EventController::class, 'update'])->middleware('auth');
+
+Route::post('events/joinEvent/{id}', [EventController::class, 'joinEvent'])->middleware('auth');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'),'verified'])->group(function () {
     Route::get('/dashboard', [EventController::class, 'dashboard'])->name('dashboard');

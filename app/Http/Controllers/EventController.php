@@ -148,7 +148,20 @@ class EventController extends Controller
          * request all envia todos os dados
          */
         Event::findOrFail($id)->update($request->all());
+        /**
+         * Erro ao adicionar a imagem.
+         * Arrumar depois.
+         */
 
         return redirect('/dashboard')->with('msg', 'Evento atualizado com sucesso!');;
+    }
+
+    public function joinEvent ($id){
+        $user = auth()->User();
+        $event = Event::findOrFail($id);
+
+        $user->eventsAsParticipants()->attach($id);
+
+        return redirect('/dashboard')->with('msg', 'Participação confirmada com sucesso no evento '.$event->title.' !');
     }
 }

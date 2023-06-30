@@ -10,9 +10,12 @@
             <h1>{{ $event->title }}</h1>
             <p class="event-city"><ion-icon name="location-outline"></ion-icon> {{ $event->city }}</p>
             <p class="events-participants"><ion-icon name="calendar-outline"></ion-icon> {{date('d/m/Y', strtotime($event->date))}}</p>
-            <p class="events-participants"><ion-icon name="people-outline"></ion-icon> X Participantes</p>
+            <p class="events-participants"><ion-icon name="people-outline"></ion-icon> {{count($event->users)}} Participantes</p>
             <p class="event-owner"><ion-icon name="star-outline"></ion-icon> Dono do Evento: {{$eventOwner}}</p>
-            <a href="#" class="btn btn-primary" id="event-submit">Confirmar Presença</a>
+            <form action="/events/joinEvent/{{$event->id}}" method="post">
+                @csrf
+                <button class="btn btn-primary" id="event-submit">Confirmar Presença</button>
+            </form>
             <h3>O evento conta com:</h3>
             <ul id="item-list">
                 @foreach($event->items as $item) 
