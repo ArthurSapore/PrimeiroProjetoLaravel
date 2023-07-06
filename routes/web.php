@@ -47,6 +47,9 @@ Route::put('/events/update/{id}', [EventController::class, 'update'])->middlewar
 
 Route::post('events/joinEvent/{id}', [EventController::class, 'joinEvent'])->middleware('auth');
 
+Route::post('events/disjoinEvent/{id}', [EventController::class, 'disjoinEvent'])->middleware('auth');
+
+
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'),'verified'])->group(function () {
     Route::get('/dashboard', [EventController::class, 'dashboard'])->name('dashboard');
 });

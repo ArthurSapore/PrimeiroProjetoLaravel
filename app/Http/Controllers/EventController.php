@@ -101,10 +101,10 @@ class EventController extends Controller
         * método que irá persistir os dados no banco 
         */
        $event->save();
-    /**
-     * with envia uma mensagem de sessão para a view
-     */
-    return redirect('/')->with('msg', 'Evento criado com sucesso!');
+        /**
+         * with envia uma mensagem de sessão para a view
+         */
+        return redirect('/')->with('msg', 'Evento criado com sucesso!');
     }
 
     /**
@@ -128,7 +128,9 @@ class EventController extends Controller
          * retorna os eventos relacionados àqueles usuários através do relacionamento ja criado no model.
          */
         $events =  $user->events;
-        return view('events.dashboard', ['events'=> $events]);
+        $eventsAsParticipant = $user->eventsAsParticipants;
+
+        return view('events.dashboard', ['events'=> $events, 'eventsAsParticipant'=> $eventsAsParticipant]);
     }
 
     public function destroy($id){
@@ -139,7 +141,15 @@ class EventController extends Controller
 
     public function edit($id){
         $edit = Event::findOrFail($id);
+        $user = auth()->User();
 
+        /**
+         * se o usuário não for dono do evento, irá impedir que ele edite 
+         * caso ele tente forçar acessar a rota
+         */
+        if($user->id != $edit->user_id){
+            return view('/dashboard');
+        }
         return view('events.edit', ['edit'=>$edit]);
     }
 
@@ -163,5 +173,15 @@ class EventController extends Controller
         $user->eventsAsParticipants()->attach($id);
 
         return redirect('/dashboard')->with('msg', 'Participação confirmada com sucesso no evento '.$event->title.' !');
+    }
+
+    public function disjoinEvent($id){
+        $user = auth()->User();
+        $event = Event::findOrFail($id);   
+        /**
+         * detach retira o relacionamento.
+         */
+        $user->eventsAsParticipants()->detach($id);
+        return redirect('/dashboard')->with('msg', 'Você saiu do evento '.$event->title.' !');
     }
 }
